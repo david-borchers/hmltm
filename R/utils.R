@@ -132,6 +132,27 @@ logit=function(p) return(log(p/(1-p)))  # returns logit of p
 #' @param x scalar or .
 inv.logit=function(x) return(1/(1+exp(-x))) # returns p from x=(logit of p)
 
+#' @title Lognormal confidence interval with lower bound
+#'
+#' @usage lnci.nmin(n,Nhat,cv)
+#' 
+#' @description
+#'  Calculates 95\% confidence interval for abundance estimate \code{Nhat}, based on the assumption that 
+#'  \code{Nhat} is lognormally distributed and that \code{n} population members were observed (so that 
+#'  lower bound of confidence interval can't be below \code{n}.
+#'  
+#' @param n observed number of population members.
+#' @param Nhat point estimate of abundance.
+#' @param cv coefficient of variation of \code{Nhat}.
+#' 
+#' @export
+lnci.nmin=function(n,Nhat,cv){
+  varNhat=(Nhat*cv)^2
+  cfactor=exp(1.96*sqrt(log(1+varNhat/(Nhat-n)^2)))
+  lower=n+(Nhat-n)/cfactor
+  upper=n+(Nhat-n)*cfactor
+  return(list(lower=lower,upper=upper))
+}
 
 #' @title Data truncation.
 #'
