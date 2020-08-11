@@ -1,0 +1,39 @@
+Patches:
+
+initial setup
+est.hmltm -> est.R
+NDest -> est.R
+
+patch number 1
+lnci.nmin -> utils.R   *** not done
+
+bootsum -> bootstrap.R
+strat.estable-> bootstrap.R
+cv.avail -> bootstrap.R
+bs.hmltm -> bootstrap.R
+Npars.from.lNpars -> bootstrap.R
+resample.hmmpars -> bootstrap.R
+parametric.resample.hmmpars-> bootstrap.R # new
+resample.hmmpars-> bootstrap.R
+vectorize -> bootstrap.R
+unvectorize -> bootstrap.R
+hmmpars.boot -> bootstrap.R
+hmmpars.paramtetric.boot -> bootstrap.R
+bootstrap.p.with.Et -> bootstrap.R
+bootstrap.p.with.hmm -> bootstrap.R
+bootsum.p -> bootstrap.R
+
+bsample -> utils.R *** not done
+cv -> utils.R *** not done
+n2m -> utils.R *** not done
+histline -> utils.R *** not done
+sintegral -> utils.R *** not done
+makePi -> availutils.R  ... done
+makeE -> availutils.R
+make.hmm.pars.from.Et -> availutils.R
+make.survey.pars -> utils.R
+make.covb -> utils.R
+logit -> utils.R
+inv.logit -> utils.R
+poiss.equiv -> HMMutils.R
+all gof functions -> gof.R

@@ -12,10 +12,13 @@
 #' Ea=c(10,12);Eu=c(20,22)
 #' makePi(Eu,Ea)
 #' makePi(Eu[1],Ea[1])
-makePi=function(Eu,Ea)
+#' 
+#' @export
+makePi <- function(Eu,Ea)
 {
-  nav=length(Eu)
-  if(length(Ea)!=nav) stop("Lengths of Eu and Ea must be the same")
+  nav <- length(Eu)
+  if(length(Ea)!=nav) 
+    stop("Lengths of Eu and Ea must be the same")
   #  if(nav==1) {
   #    Pi=matrix(rep(0,4),nrow=2,
   #              dimnames=list(From=c("Unavailable","Available"),To=c("Unavailable","Available")))
@@ -24,16 +27,17 @@ makePi=function(Eu,Ea)
   #    Pi[1,1]=1-Pi[1,2]
   #    Pi[2,2]=1-Pi[2,1]
   #  } else {
-  Pi=array(rep(0,2*2*nav),dim=c(2,2,nav),
-           dimnames=list(From=c("Unavailable","Available"),To=c("Unavailable","Available"),
-                         Animal=as.character(1:nav)))
+  Pi <- array(rep(0,2*2*nav),dim=c(2,2,nav),
+              dimnames=list(From=c("Unavailable","Available"),To=c("Unavailable","Available"),
+                            Animal=as.character(1:nav)))
   for(i in 1:nav) {
-    Pi[1,2,i]=1/Eu[i]
-    Pi[2,1,i]=1/Ea[i]
-    Pi[1,1,i]=1-Pi[1,2,i]
-    Pi[2,2,i]=1-Pi[2,1,i]    
+    Pi[1,2,i] <- 1/Eu[i]
+    Pi[2,1,i] <- 1/Ea[i]
+    Pi[1,1,i] <- 1-Pi[1,2,i]
+    Pi[2,2,i] <- 1-Pi[2,1,i]    
   }
   #  }
+  
   return(Pi)
 }
 
