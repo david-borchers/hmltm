@@ -1,3 +1,4 @@
+rm(list=ls())
 library(hmltm)
 
 # get data and availability model parameters

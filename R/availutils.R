@@ -58,23 +58,26 @@ makePi <- function(Eu,Ea)
 #' makeE(Pi2) # recover c(Eu,Ea)
 #' Pi1=makePi(Eu[1],Ea[1]) # make a single transition matrix
 #' makeE(Pi1) # recover c(Eu,Ea)
-makeE=function(Pi){
+#' 
+#' @export
+makeE <- function(Pi){
   #----------------------------------------------------------
   # Returns expected time in states 1 and 2 for the 2x2 
   # probability transition matrix Pi for a 2-state
   # Markov process.
   #----------------------------------------------------------
   if(length(dim(Pi))==2){
-    E=c(1/Pi[1,2],1/Pi[2,1])
-    names(E)=c("Unavailable","Available")
+    E <- c(1/Pi[1,2],1/Pi[2,1])
+    names(E) <- c("Unavailable","Available")
   } else {
-    nav=dim(Pi)[3]
-    E=matrix(rep(NA,2*nav),nrow=2,
-             dimnames=list(State=c("Unavailable","Available"),Animal=as.character(1:nav)))
-    for(i in 1:nav){
-      E[,i]=c(1/Pi[1,2,i],1/Pi[2,1,i])      
-    }
+    nav <- dim(Pi)[3]
+    E <- matrix(rep(NA,2*nav),nrow=2,
+                dimnames=list(State=c("Unavailable","Available"),Animal=as.character(1:nav)))
+    
+    for(i in 1:nav)
+      E[,i] <- c(1/Pi[1,2,i],1/Pi[2,1,i])
   }
+  
   return(E)
 }
 
@@ -137,31 +140,44 @@ makeE=function(Pi){
 #' of harbour porpoises, Phocoena phocoena. Canadian Journal of Fisheries and Aquatic Sciences 52, 
 #' 1064-1073.
 #' 
-make.hmm.pars.from.Et=function(Ea,Eu,seEa,seEu,covEt=0,pm=NULL) {
-  nav=length(Ea)
-  if(length(Eu)!=nav |length(seEa)!=nav |length(seEu)!=nav |length(covEt)!=nav) stop("Lengths of Ea, Eu, seEa, seEu, covEt must all be the same.")
-  if(is.null(pm)) pm=matrix(c(rep(0,nav),rep(1,nav)),nrow=2,byrow=TRUE)
+#' @export
+make.hmm.pars.from.Et <- function(Ea,Eu,seEa,seEu,covEt=0,pm=NULL) {
+  nav <- length(Ea)
+  
+  if(length(Eu)!=nav |length(seEa)!=nav |length(seEu)!=nav |length(covEt)!=nav) 
+    stop("Lengths of Ea, Eu, seEa, seEu, covEt must all be the same.")
+  
+  if(is.null(pm)) 
+    pm <- matrix(c(rep(0,nav),rep(1,nav)),nrow=2,byrow=TRUE)
+  
   if(is.vector(pm)) {
-    if(length(pm)!=2) stop("pm must either be a vector of length 2 or a matrix of dimension length(Ea)x2.")
-    pm=matrix(c(pm[1],pm[2]),ncol=2)
+    if(length(pm)!=2) 
+      stop("pm must either be a vector of length 2 or a matrix of dimension length(Ea)x2.")
+    
+    pm <- matrix(c(pm[1],pm[2]),ncol=2)
   }
-  if(dim(pm)[2]!=nav) stop("Inconsistent dimensions of Ea and pm.")
-  Pi=Sigma.Et=array(rep(NA,2*2*nav),dim=c(2,2,nav),
-                    dimnames=list(From=c("Unavailable","Available"),To=c("Unavailable","Available"),
-                                  Animal=as.character(1:nav)))
-  Et=delta=newpm=matrix(rep(NA,2*nav),ncol=nav,dimnames=list(State=c("Unavailable","Available"),
-                                                             Animal=as.character(1:nav)))
+  
+  if(dim(pm)[2]!=nav) 
+    stop("Inconsistent dimensions of Ea and pm.")
+  
+  Pi <- Sigma.Et <- array(rep(NA,2*2*nav),dim=c(2,2,nav),
+                          dimnames=list(From=c("Unavailable","Available"),To=c("Unavailable","Available"),
+                                        Animal=as.character(1:nav)))
+  
+  Et <- delta <- newpm <- matrix(rep(NA,2*nav),ncol=nav,dimnames=list(State=c("Unavailable","Available"),
+                                                                      Animal=as.character(1:nav)))
   for(i in 1:nav) {
-    Et[,i]=c(Eu[i],Ea[i])
-    Sigma.Et[,,i]=diag(c(seEu[i],seEa[i])^2)
+    Et[,i] <- c(Eu[i],Ea[i])
+    Sigma.Et[,,i] <- diag(c(seEu[i],seEa[i])^2)
     #    cvEt=c(seEu[i]/Et[1,i],seEa[i]/Et[2,i])
     #    Sigma.Et[,,i]=diag((cvEt*Et)^2)
-    Sigma.Et[1,2,i]=Sigma.Et[2,1,i]=covEt[i]
-    Pi[,,i]=makePi(Et[1,i],Et[2,i])
-    delta[,i]=compdelta(Pi[,,i])
-    newpm[,i]=pm[,i]
+    Sigma.Et[1,2,i] <- Sigma.Et[2,1,i] <- covEt[i]
+    Pi[,,i] <- makePi(Et[1,i],Et[2,i])
+    delta[,i] <- compdelta(Pi[,,i])
+    newpm[,i] <- pm[,i]
   }
-  hmm.pars=list(pm=newpm,Pi=Pi,delta=delta,Et=Et,Sigma.Et=Sigma.Et)
+  
+  hmm.pars <- list(pm=newpm,Pi=Pi,delta=delta,Et=Et,Sigma.Et=Sigma.Et)
   return(hmm.pars)  
 }
 

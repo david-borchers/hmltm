@@ -429,3 +429,5 @@ make.covb=function(b,FUN,models,dat)
   }
   return(covb)
 }
+
+

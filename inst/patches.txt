@@ -5,6 +5,19 @@ est.hmltm -> est.R
 NDest -> est.R
 
 patch number 1
+makePi -> availutils.R  ... done
+
+patch number 2
+makeE -> availutils.R  ... done
+make.hmm.pars.from.Et -> availutils.R  ... done
+make.survey.pars -> utils.R ##### DO NOT REPLACE
+is.nullmodel -> utils.R ... done ... undone
+make.covb -> utils.R ... done ... undone
+logit -> utils.R
+inv.logit -> utils.R
+poiss.equiv -> HMMutils.R
+all gof functions -> gof.R
+
 lnci.nmin -> utils.R   *** not done
 
 bootsum -> bootstrap.R
@@ -28,12 +41,6 @@ cv -> utils.R *** not done
 n2m -> utils.R *** not done
 histline -> utils.R *** not done
 sintegral -> utils.R *** not done
-makePi -> availutils.R  ... done
-makeE -> availutils.R
-make.hmm.pars.from.Et -> availutils.R
-make.survey.pars -> utils.R
-make.covb -> utils.R
-logit -> utils.R
-inv.logit -> utils.R
-poiss.equiv -> HMMutils.R
-all gof functions -> gof.R
+
+
+
