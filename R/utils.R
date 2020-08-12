@@ -455,7 +455,7 @@ numericfy = function(dat,column=1){
   ivals = rep(NA,nvals) # new data column (numeric)
   for(i in 1:length(vals)) ivals[i] = which(uvals==vals[i])
   if(colnum==1) newdat = cbind(ivals,dat[,(colnum+1):ncols])
-  else if(colnum==ncol) newdat = cbind(dat[,1:(colnum-1)],ivals)
+  else if(colnum==ncols) newdat = cbind(dat[,1:(colnum-1)],ivals)
   else newdat = cbind(dat[,1:(colnum-1)],ivals,dat[,(colnum+1):ncols])
   names(newdat) = colnames
   lookup = data.frame(new=1:nvals, old=uvals)
