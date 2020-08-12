@@ -4,8 +4,7 @@
 \alias{AIC.hmltm}
 \title{Summarise AIC and related for hmltm object(s).}
 \usage{
-\method{AIC}{hmltm}(object, ..., sort = TRUE, k = 2, dmax = 10,
-  criterion = c("AICc", "AIC"))
+\method{AIC}{hmltm}(object, ..., sort = TRUE, k = 2, dmax = 10, criterion = c("AICc", "AIC"))
 }
 \arguments{
 \item{object}{An object of class "hmltm", as produced by \link{est.hmltm}.}

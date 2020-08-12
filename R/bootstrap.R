@@ -293,7 +293,7 @@ cv.avail <- function(hmm.pars,B=1000){
 #' @param fixed.avail whether to treat the hidden Markov availability model as fixed 
 #' (\code{fixed.avail}=TRUE) or random (\code{fixed.avail}=FALSE). If \code{fixed.avail}=FALSE, 
 #' the availability model is also bootstrapped (see Details below).
-#' @parm bsfile Name of file to which bootstrap estimates should be written at each iteration 
+#' @param bsfile Name of file to which bootstrap estimates should be written at each iteration 
 #' (e.g., in case of crash).
 #' 
 #' @seealso \code{\link{bootsum}} summarises output from this function.

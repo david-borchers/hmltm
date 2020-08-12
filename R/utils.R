@@ -431,3 +431,35 @@ make.covb=function(b,FUN,models,dat)
 }
 
 
+#' @title Converts factor or character column of data frame to integer.
+#'
+#' @description
+#' Replaces a specified column, which may contain factor or character variables, with
+#' uniquely-numbered integer values. Returns the new data frame and a data frame 
+#' showing which factor corresponds to which integer, in a list.
+#' 
+#' @param dat A data frame
+#' @param column The column number or name of the column to be converted.
+#' 
+#' @export
+numericfy = function(dat,column=1){
+  vals = dat[,column]
+  colnames = names(dat)
+  ncols = length(colnames)
+  if(is.character(column)) colnum = which(colnames==column)
+  else colnum = column
+  if(is.numeric(vals)) stop("This column is already numeric. No action taken.")
+  if(is.factor(vals)) vals = as.character(vals)
+  uvals = unique(vals) # unique values
+  nvals = length(uvals) # number of unique values
+  ivals = rep(NA,nvals) # new data column (numeric)
+  for(i in 1:length(vals)) ivals[i] = which(uvals==vals[i])
+  if(colnum==1) newdat = cbind(ivals,dat[,(colnum+1):ncols])
+  else if(colnum==ncol) newdat = cbind(dat[,1:(colnum-1)],ivals)
+  else newdat = cbind(dat[,1:(colnum-1)],ivals,dat[,(colnum+1):ncols])
+  names(newdat) = colnames
+  lookup = data.frame(new=1:nvals, old=uvals)
+  return(list(dat=newdat,lookup=lookup))
+}
+
+
