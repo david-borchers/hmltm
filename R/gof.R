@@ -11,7 +11,8 @@
 #' p-value (which is based on all cdf values).
 # 
 #' @param hmltm fitted model, as output by \code{\link{est.hmltm}}
-#' @param ks.plot If TRUE, does Q-Q plot. Point corresponding to largest difference between
+#' @param ks.plot If TRUE, does CDF-EDF plot (similar to a Q-Q plot, but using cumulative distribution function 
+#' values rather than quantiles). Point corresponding to largest difference between
 #' empirical and theoretical cdf (on which the Kolmogarov-Smirnov test is based) is circled in red.
 #' @param seplots if TRUE does additional diagnostic plots
 #' @param smult multiplier to size circles in third plot.
@@ -53,7 +54,7 @@ hmmlt.gof.y=function(hmltm,ks.plot=TRUE,seplots=FALSE,smult=5,ymax=hmmlt$fitpars
   p.cvm=cvm.test(Fy0)$p.value
   # plots
   if(ks.plot) {
-    plot(1-e.cdf,cdf,xlab="Empirical Distribution Function",ylab="Cumulative Distribution Function",main="Forward Dist. Q-Q Plot",xlim=c(0,1),ylim=c(0,1),pch="+")
+    plot(1-e.cdf,cdf,xlab="Empirical Distribution Function",ylab="Cumulative Distribution Function",main="Forward Dist. CDF-EDF Plot",xlim=c(0,1),ylim=c(0,1),pch="+")
     lines(c(0,1),c(1,0))
     points(1-e.cdf[worst],cdf[worst],col="red") # mark point on which Kolmogarov test hinges
     if(seplots){
@@ -166,8 +167,8 @@ p.kolomogarov=function(x,inf=1000,dp=1e-4)
 #' p-value (which is based on all cdf values).
 # 
 #' @param hmltm fitted model, as output by \code{\link{est.hmltm}}
-#' @param ks.plot If TRUE, does Q-Q plot. Point corresponding to largest difference between
-#' empirical and theoretical cdf (on which the Kolmogarov-Smirnov test is based) is circled in red.
+#' @param ks.plot If TRUE, does CDF-EDF plot (similar to a Q-Q plot, but using cumulative distribution function 
+#' values rather than quantiles). Point corresponding to largest difference between#' empirical and theoretical cdf (on which the Kolmogarov-Smirnov test is based) is circled in red.
 hmmlt.gof.x=function(hmltm,ks.plot=TRUE){
   hmmlt=hmltm$hmltm.fit
   n=length(hmmlt$xy$x)
@@ -183,7 +184,7 @@ hmmlt.gof.x=function(hmltm,ks.plot=TRUE){
   p.ks=p.kolomogarov(Dn)
   p.cvm=cvm.test(cdf)$p.value # Under model, cdf values are from uniform; default for cvm.test is "punif"
   if(ks.plot) {
-    plot(edf,cdf,pch="+",xlim=c(0,1),ylim=c(0,1),xlab="Empirical Distribution Function",ylab="Cumulative Distribution Function",main="Perp. Dist. Q-Q Plot")
+    plot(edf,cdf,pch="+",xlim=c(0,1),ylim=c(0,1),xlab="Empirical Distribution Function",ylab="Cumulative Distribution Function",main="Perp. Dist. CDF-EDF Plot")
     lines(c(0,1),c(0,1))
     points(edf[worst],cdf[worst],col="red")
   }
