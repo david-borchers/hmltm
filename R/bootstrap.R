@@ -83,7 +83,8 @@ bootsum <- function(bests,ests=NULL,cilevel=0.95,write.csvs=FALSE,
   ###  keepstrat <- (ns>0) # only consider strata with some detections
   
   if(!is.null(ests)) 
-    keepcols <- c("stratum","n","L","Ngroups","mean.size","N")
+#    keepcols <- c("stratum","n","L","Ngroups","mean.size","N")
+    keepcols <- c("n","L","Ngroups","mean.size","N")
   else 
     keepcols <- colnames(bests)
   
@@ -138,12 +139,19 @@ bootsum <- function(bests,ests=NULL,cilevel=0.95,write.csvs=FALSE,
   cv <- as.data.frame(cv,row.names=1:dim(nbad)[1])
   lower <- as.data.frame(lower,row.names=1:dim(nbad)[1])
   upper <- as.data.frame(upper,row.names=1:dim(nbad)[1])
-  nbad[,1] <- rownames
-  means[,1] <- rownames
-  se[,1] <- rownames
-  cv[,1] <- rownames
-  lower[,1] <- rownames
-  upper[,1] <- rownames
+  # add stratum column back from rowname:
+  nbad = cbind(stratum=rownames,nbad)
+  means = cbind(stratum=rownames,means)
+  se = cbind(stratum=rownames,se)
+  cv = cbind(stratum=rownames,cv)
+  lower = cbind(stratum=rownames,lower)
+  upper = cbind(stratum=rownames,upper)
+#  nbad[,1] <- rownames
+#  means[,1] <- rownames
+#  se[,1] <- rownames
+#  cv[,1] <- rownames
+#  lower[,1] <- rownames
+#  upper[,1] <- rownames
   
   outsum <- list(nbad=nbad,mean=means,se=se,cv=cv,lower=lower,upper=upper)
   
@@ -158,7 +166,7 @@ bootsum <- function(bests,ests=NULL,cilevel=0.95,write.csvs=FALSE,
       totalrow = dim(keepests)[1]
       keepests$stratum[totalrow] = "Total"
     }
-    keepests[totalrow,-1] = apply(keepests[-totalrow,-1],2,"sum") # put totals in last rows; omit 1sst col as it is a factor
+    keepests[totalrow,-1] = apply(keepests[-totalrow,-1],2,"sum") # put totals in last rows; omit 1st col as it is a factor
     # Density and mean size should not be totals, so correct them here
     keepests[totalrow,"Dgroups"] = keepests[totalrow,"Ngroups",]/keepests[totalrow,"stratum.Area"]
     keepests[totalrow,"D"] = keepests[totalrow,"N",]/keepests[totalrow,"stratum.Area"]
@@ -381,8 +389,10 @@ bs.hmltm=function(hmltm.est,B,hmm.pars.bs=NULL,bs.trace=0,report.by=10,fixed.ava
   nDstrat = length(hmltm.est$point$ests$stratum)-1 # Number of strata for which we want estimates
   Dstrat = hmltm.est$point$ests$stratum[1:nDstrat] # Strata for which we want estimates
   estdim <- dim(hmltm.est$point$ests) #### bitchange
+  estdim[2] = estdim[2] - 1 # don't want to keep stratum name column
   bestdim <- c(estdim,B) #### bitchange
-  bestdimnames <- list(as.character(hmltm.est$point$ests$stratum),colnames(hmltm.est$point$ests),1:B)
+#  bestdimnames <- list(as.character(hmltm.est$point$ests$stratum),colnames(hmltm.est$point$ests),1:B)
+  bestdimnames <- list(as.character(hmltm.est$point$ests$stratum),colnames(hmltm.est$point$ests)[-1],1:B)
   best <- array(rep(NA,B*prod(estdim)),dim=bestdim,dimnames=bestdimnames)
   bn <- rep(0,B) #### bitchange
   
@@ -455,7 +465,7 @@ bs.hmltm=function(hmltm.est,B,hmm.pars.bs=NULL,bs.trace=0,report.by=10,fixed.ava
       stop("Incompatible columns in bootrapped estimate object and hmltm.est$point$ests; may be using old version of latter?")
     
     for(st in 1:(nDstrat+1)) 
-      best[st,,b] <- as.numeric(bhat$point$ests[st,])
+      best[st,,b] <- as.numeric(bhat$point$ests[st,-1]) # exclude stratum column of point$ests
     
     if(b%%report.by==0) {
       cat(paste(bn[b],";",sep=""),"Iterations done:",b,"\n")
