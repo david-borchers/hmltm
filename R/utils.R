@@ -440,9 +440,11 @@ make.covb=function(b,FUN,models,dat)
 #' 
 #' @param dat A data frame
 #' @param column The column number or name of the column to be converted.
+#' @param add If TRUE a new column is added, named `num<column>', where '<column>'
+#' is the value of the \code{column} argument, else the old column is overwritten.
 #' 
 #' @export
-numericfy = function(dat,column=1){
+numericfy = function(dat,column=1,add=FALSE){
   vals = dat[,column]
   colnames = names(dat)
   ncols = length(colnames)
@@ -454,10 +456,15 @@ numericfy = function(dat,column=1){
   nvals = length(uvals) # number of unique values
   ivals = rep(NA,nvals) # new data column (numeric)
   for(i in 1:length(vals)) ivals[i] = which(uvals==vals[i])
-  if(colnum==1) newdat = cbind(ivals,dat[,(colnum+1):ncols])
-  else if(colnum==ncols) newdat = cbind(dat[,1:(colnum-1)],ivals)
-  else newdat = cbind(dat[,1:(colnum-1)],ivals,dat[,(colnum+1):ncols])
-  names(newdat) = colnames
+  if(add) {
+    newdat = cbind(dat,ivals)
+    names(newdat)[length(names(newdat))] = paste("num",column,sep="")
+  } else {
+    if(colnum==1) newdat = cbind(ivals,dat[,(colnum+1):ncols])
+    else if(colnum==ncols) newdat = cbind(dat[,1:(colnum-1)],ivals)
+    else newdat = cbind(dat[,1:(colnum-1)],ivals,dat[,(colnum+1):ncols])
+    names(newdat) = colnames
+  }
   lookup = data.frame(new=1:nvals, old=uvals)
   return(list(dat=newdat,lookup=lookup))
 }
