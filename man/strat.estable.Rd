@@ -7,9 +7,9 @@
 strat.estable(est, cv)
 }
 \arguments{
-\item{est}{output from \code{\link{est.hmltm}}.}
+\item{est}{element \code{$point$ests} of output from \code{\link{est.hmltm}}.}
 
-\item{cv}{\code{$cv} element of output from \code{\link{bs.hmltm}}.}
+\item{cv}{\code{$cv} element of output from \code{\link{strat.estable}}.}
 }
 \value{
 Returns a data frame with columns as follows:

@@ -4,13 +4,13 @@
 \alias{richard.a}
 \title{Richard's availability correction factor calculation for multiple availability models.}
 \usage{
-richard.a(hmm.pars, w, spd = 1)
+richard.a(hmm.pars, ymax, spd = 1)
 }
 \arguments{
 \item{hmm.pars}{is a list with 2x2xm Markov model transition matrices (in which state 1 is UNavailable) 
 in element $Pi (where m is number of availability parameter sets).}
 
-\item{w}{vector of forward distances.}
+\item{ymax}{vector of forward distances.}
 
 \item{spd}{observer speed: must be entered if y is not time, since hmm.pars always time.}
 }
@@ -25,9 +25,9 @@ See Richard et al. (2010), equation on botto mof page 91 for details of method.
 \examples{
 Ea=c(10,12);Eu=c(20,22);seEa=c(2,3);seEu=c(4,6);covEt=c(2,3) # mean avail and unavail times (& var)
 hmm.pars=make.hmm.pars.from.Et(Ea,Eu,seEa,seEu,covEt) # make hmm.pars object
-richard.a(hmm.pars,w=10,spd=4)
-richard.a(hmm.pars,w=100,spd=4) # can be greater than 1 (!)
-richard.a(hmm.pars,w=rexp(20,1/100),spd=4)
+richard.a(hmm.pars,ymax=10,spd=4)
+richard.a(hmm.pars,ymax=100,spd=4) # can be greater than 1 (!)
+richard.a(hmm.pars,ymax=rexp(20,1/100),spd=4)
 }
 \references{
 Richard, P.R., Laake, J.L., Hobbs, R.C., Heide-Jorgensen, M.P., Asselin, N.C. and Cleator, H. 2010.

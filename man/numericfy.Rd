@@ -4,12 +4,15 @@
 \alias{numericfy}
 \title{Converts factor or character column of data frame to integer.}
 \usage{
-numericfy(dat, column = 1)
+numericfy(dat, column = 1, add = FALSE)
 }
 \arguments{
 \item{dat}{A data frame}
 
 \item{column}{The column number or name of the column to be converted.}
+
+\item{add}{If TRUE a new column is added, named `num<column>', where '<column>'
+is the value of the \code{column} argument, else the old column is overwritten.}
 }
 \description{
 Replaces a specified column, which may contain factor or character variables, with

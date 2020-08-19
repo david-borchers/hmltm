@@ -1,5 +1,3 @@
-# ============== Other availability correction methods and realted ==========================
-
 #' @title Laake's availability correction factor calculation for multiple availability models.
 #'
 #' @description
@@ -46,9 +44,9 @@ laake.a=function(hmm.pars,ymax,spd=NULL){
 #' region, using the method of Laake et al. (1997), Eqn (4).
 #'
 #' @param Pi is Markov model transition matrix (state 1 is UNavailable).
-#' @param w is maximum forward distance things can be detected.
-#' @param spd is observer speed. If NULL w is assumed to be in the units of the Markov chain.
-#' @param E is mean times unavailable (E[1]) and available (E[2]) (in unist of Markov chain). 
+#' @param ymax is maximum forward distance things can be detected.
+#' @param spd is observer speed. If NULL ymax is assumed to be in the units of the Markov chain.
+#' @param E is mean times unavailable (E[1]) and available (E[2]) (in units of Markov chain). 
 #' If E is not NULL, it is used in preference to Pi for calculations, else it is ignored.
 #'
 #' @details See Laake et al. (1997), Eqn (4), or Borchers et al. (2013) for details of the method.
@@ -59,15 +57,15 @@ laake.a=function(hmm.pars,ymax,spd=NULL){
 #' 
 #' Laake, J., Calambokidis, J., Osmek, S., and Rugh, D. 1997. Probability of detecting harbor 
 #' porpoise from aerial surveys: estimating g(0). Journal of Wildlife Management 61, 63-75.
-jeffa=function(Pi,w,spd=NULL,E=NULL)
+jeffa=function(Pi,ymax,spd=NULL,E=NULL)
 {
-  if(!is.null(spd)) w=w/spd # convert distance to time if spd given
+  if(!is.null(spd)) ymax=ymax/spd # convert distance to time if spd given
   if(!is.null(E)) {
     warning("Used E, not Pi for calculations")
   } else {
     E=makeE(Pi) # expected time up, expected time down
   }
-  a=(E[2] + E[1]*(1-exp(-w/E[1])))/sum(E)    
+  a=(E[2] + E[1]*(1-exp(-ymax/E[1])))/sum(E)    
   return(a)
 }
 
@@ -112,7 +110,7 @@ instant.a=function(hmm.pars,Et=NULL){
 }
 
 
-#' @title Simple availability correction factor calculation.
+#' @title Simple availability correction factor calculation for single animal.
 #'
 #' @description
 #' Calculates proportion of time an animal with a Markov availability process is available.
@@ -128,6 +126,29 @@ simplea=function(Pi,E=NULL)
   return(a)
 }
 
+
+#' @title Simple availability correction factor calculation.
+#'
+#' @description
+#' Calculates proportion of time an animal with a Markov availability process is available.
+#'
+#' @param hmm.pars is as list with an element \code{$Pi} that is a Markov model transition matrix (state 1 is UNavailable).
+#' @param E is expected time in each state (state 1 in UNavailable).
+#'
+#' @export
+simple.a=function(hmm.pars)
+{
+  if(dim(hmm.pars$Pi)[1]!=2 | dim(hmm.pars$Pi)[2]!=2) stop("1st two dimensions of hmm.pars$Pi must be 2.")
+  if(length(dim(hmm.pars$Pi))==2) hmm.pars$Pi=array(hmm.pars$Pi,dim=c(2,2,1)) # need 3D array below
+  nav=dim(hmm.pars$Pi)[3] # number of HMM parameter sets
+  a=rep(NA,nav)
+  for(i in 1:nav){
+    Eti=makeE(hmm.pars$Pi[,,i]) 
+    a[i]=Eti[2]/sum(Eti)
+  }
+  return(list(mean=mean(a),a=a))
+}
+
 #' @title McLaren's availability correction factor calculation for multiple availability models.
 #'
 #' @description
@@ -136,8 +157,8 @@ simplea=function(Pi,E=NULL)
 #'
 #' @param hmm.pars is a list with 2x2xm Markov model transition matrices (in which state 1 is UNavailable) 
 #' in element \code{$Pi} (where m is number of availability parameter sets).
-#' @param w is max forward distance things can be seen at (or max forward time). Must be scalar.
-#' @param spd is observer speed; omit if w is max forward TIME.
+#' @param ymax is max forward distance things can be seen at (or max forward time). Must be scalar.
+#' @param spd is observer speed; omit if ymax is max forward TIME.
 #'
 #' @references
 #' McLaren, I.A. 1961. Methods of determining the numbers and availability of ringed seals in the 
@@ -148,16 +169,16 @@ simplea=function(Pi,E=NULL)
 #' @examples
 #' Ea=c(10,12);Eu=c(20,22);seEa=c(2,3);seEu=c(4,6);covEt=c(2,3)
 #' hmm.pars=make.hmm.pars.from.Et(Ea,Eu,seEa,seEu,covEt)
-#' mclaren.a(hmm.pars,w=10,spd=4)
-#' mclaren.a(hmm.pars,w=100,spd=4) # can be greater than 1 (!)
-mclaren.a=function(hmm.pars,w,spd=1){
+#' mclaren.a(hmm.pars,ymax=10,spd=4)
+#' mclaren.a(hmm.pars,ymax=100,spd=4) # can be greater than 1 (!)
+mclaren.a=function(hmm.pars,ymax,spd=1){
   if(dim(hmm.pars$Pi)[1]!=2 | dim(hmm.pars$Pi)[2]!=2) stop("1st two dimensions of hmm.pars$Pi must be 2.")
   if(length(dim(hmm.pars$Pi))==2) hmm.pars$Pi=array(hmm.pars$Pi,dim=c(2,2,1)) # need 3D array below
   nav=dim(hmm.pars$Pi)[3] # number of HMM parameter sets
   a=rep(NA,nav)
   for(i in 1:nav){
-    Eti=makeE(hmm.pars$Pi[,,i])*spd # Pi is TIME; if w is DISTANCE need to multiply time by speed
-    a[i]=(Eti[2]+w)/sum(Eti)
+    Eti=makeE(hmm.pars$Pi[,,i])*spd # Pi is TIME; if ymax is DISTANCE need to multiply time by speed
+    a[i]=(Eti[2]+ymax)/sum(Eti)
   }
   return(list(mean=mean(a),a=a))
 }
@@ -171,7 +192,7 @@ mclaren.a=function(hmm.pars,w,spd=1){
 #'
 #' @param hmm.pars is a list with 2x2xm Markov model transition matrices (in which state 1 is UNavailable) 
 #' in element $Pi (where m is number of availability parameter sets).
-#' @param w vector of forward distances.
+#' @param ymax vector of forward distances.
 #' @param spd observer speed: must be entered if y is not time, since hmm.pars always time.
 #'
 #' @details See Richard et al. (2010), equation on botto mof page 91 for details of method.
@@ -186,11 +207,11 @@ mclaren.a=function(hmm.pars,w,spd=1){
 #' @examples
 #' Ea=c(10,12);Eu=c(20,22);seEa=c(2,3);seEu=c(4,6);covEt=c(2,3) # mean avail and unavail times (& var)
 #' hmm.pars=make.hmm.pars.from.Et(Ea,Eu,seEa,seEu,covEt) # make hmm.pars object
-#' richard.a(hmm.pars,w=10,spd=4)
-#' richard.a(hmm.pars,w=100,spd=4) # can be greater than 1 (!)
-#' richard.a(hmm.pars,w=rexp(20,1/100),spd=4)
-richard.a=function(hmm.pars,w,spd=1){
-  y=na.omit(w)
+#' richard.a(hmm.pars,ymax=10,spd=4)
+#' richard.a(hmm.pars,ymax=100,spd=4) # can be greater than 1 (!)
+#' richard.a(hmm.pars,ymax=rexp(20,1/100),spd=4)
+richard.a=function(hmm.pars,ymax,spd=1){
+  y=na.omit(ymax)
   n=length(y)
   if(length(dim(hmm.pars$Pi))==2) hmm.pars$Pi=array(hmm.pars$Pi,dim=c(2,2,1)) # need 3D array below
   nav=dim(hmm.pars$Pi)[3] # number of HMM parameter sets

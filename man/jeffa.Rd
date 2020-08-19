@@ -4,16 +4,16 @@
 \alias{jeffa}
 \title{Laake's availability correction factor calculation for a single 2-state Markov model.}
 \usage{
-jeffa(Pi, w, spd = NULL, E = NULL)
+jeffa(Pi, ymax, spd = NULL, E = NULL)
 }
 \arguments{
 \item{Pi}{is Markov model transition matrix (state 1 is UNavailable).}
 
-\item{w}{is maximum forward distance things can be detected.}
+\item{ymax}{is maximum forward distance things can be detected.}
 
-\item{spd}{is observer speed. If NULL w is assumed to be in the units of the Markov chain.}
+\item{spd}{is observer speed. If NULL ymax is assumed to be in the units of the Markov chain.}
 
-\item{E}{is mean times unavailable (E[1]) and available (E[2]) (in unist of Markov chain). 
+\item{E}{is mean times unavailable (E[1]) and available (E[2]) (in units of Markov chain). 
 If E is not NULL, it is used in preference to Pi for calculations, else it is ignored.}
 }
 \description{

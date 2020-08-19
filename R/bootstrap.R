@@ -198,8 +198,8 @@ bootsum <- function(bests,ests=NULL,cilevel=0.95,write.csvs=FALSE,
 #' @description
 #' Produces brief summarry of bootstrap results
 #' 
-#' @param est output from \code{\link{est.hmltm}}.
-#' @param cv \code{$cv} element of output from \code{\link{bs.hmltm}}. 
+#' @param est element \code{$point$ests} of output from \code{\link{est.hmltm}}.
+#' @param cv \code{$cv} element of output from \code{\link{strat.estable}}. 
 #' 
 #' @return Returns a data frame with columns as follows:
 #' \item{Stratum}{stratum number}

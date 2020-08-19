@@ -5,7 +5,7 @@ Version: 1.0
 Date: 2020-11-20
 Author: David Borchers and Chris Jefferson
 Maintainer: David Borchers <dlb@st-andrews.ac.uk>
-Description: Density and abundance estimation using line transect survey data with forward distances to detections and estimates of availability process parameters.
+Description: Density and abundance estimation with line transects and hidden Markov availability models, using survey data with forward distances to detections and estimates of availability process parameters.
 License: GPL (>= 2)
 Depends: Rcpp (>= 0.10.3), RcppArmadillo (>= 0.3.810.0), HiddenMarkov (>= 1.7-0), MASS (>= 7.3-23), goftest (>= 1.0-2)
 LinkingTo: Rcpp, RcppArmadillo, HiddenMarkov, MASS, goftest

@@ -7,9 +7,11 @@
 makePi(Eu, Ea)
 }
 \arguments{
-\item{Eu}{is the mean time UNavailable in one available-unavailable cycle.}
+\item{Eu}{is a vector containing the mean time(s) animals are UNavailable in one 
+available-unavailable cycle.}
 
-\item{Ea}{is the mean time available in one available-unavailable cycle.}
+\item{Ea}{is  a vector containing the mean time(s) animals are available in one 
+available-unavailable cycle (must be same length as Eu).}
 }
 \description{
 Makes Markov transition matrices from mean times available (Ea) and unavailable (Eu). 

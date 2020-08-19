@@ -5,8 +5,10 @@
 #' If Ea and Eu are vectors of length m (they must be the same length), returns a 2x2xm array 
 #' in which element [,,i] is the ith Markov transition matrix; else returns a single 2x2 matrix.
 #'
-#' @param Eu is the mean time UNavailable in one available-unavailable cycle.
-#' @param Ea is the mean time available in one available-unavailable cycle.
+#' @param Eu is a vector containing the mean time(s) animals are UNavailable in one 
+#' available-unavailable cycle.
+#' @param Ea is  a vector containing the mean time(s) animals are available in one 
+#' available-unavailable cycle (must be same length as Eu).
 #'
 #' @examples
 #' Ea=c(10,12);Eu=c(20,22)

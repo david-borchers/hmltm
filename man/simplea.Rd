@@ -2,7 +2,7 @@
 % Please edit documentation in R/simpleavail.R
 \name{simplea}
 \alias{simplea}
-\title{Simple availability correction factor calculation.}
+\title{Simple availability correction factor calculation for single animal.}
 \usage{
 simplea(Pi, E = NULL)
 }

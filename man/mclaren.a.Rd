@@ -4,15 +4,15 @@
 \alias{mclaren.a}
 \title{McLaren's availability correction factor calculation for multiple availability models.}
 \usage{
-mclaren.a(hmm.pars, w, spd = 1)
+mclaren.a(hmm.pars, ymax, spd = 1)
 }
 \arguments{
 \item{hmm.pars}{is a list with 2x2xm Markov model transition matrices (in which state 1 is UNavailable) 
 in element \code{$Pi} (where m is number of availability parameter sets).}
 
-\item{w}{is max forward distance things can be seen at (or max forward time). Must be scalar.}
+\item{ymax}{is max forward distance things can be seen at (or max forward time). Must be scalar.}
 
-\item{spd}{is observer speed; omit if w is max forward TIME.}
+\item{spd}{is observer speed; omit if ymax is max forward TIME.}
 }
 \description{
 Calculates McLaren's availability correction factor, for each of a set of m 2-state Markov model 
@@ -21,8 +21,8 @@ availability parameters passed to it and returns these and their mean.
 \examples{
 Ea=c(10,12);Eu=c(20,22);seEa=c(2,3);seEu=c(4,6);covEt=c(2,3)
 hmm.pars=make.hmm.pars.from.Et(Ea,Eu,seEa,seEu,covEt)
-mclaren.a(hmm.pars,w=10,spd=4)
-mclaren.a(hmm.pars,w=100,spd=4) # can be greater than 1 (!)
+mclaren.a(hmm.pars,ymax=10,spd=4)
+mclaren.a(hmm.pars,ymax=100,spd=4) # can be greater than 1 (!)
 }
 \references{
 McLaren, I.A. 1961. Methods of determining the numbers and availability of ringed seals in the 

@@ -1,6 +1,6 @@
-\name{hsltm-package}
-\alias{hsltm-package}
-\alias{hsltm}
+\name{hmltm-package}
+\alias{hmltm-package}
+\alias{hmltm}
 \docType{package}
 \title{
 Hidden State Line Transect Models
@@ -10,15 +10,15 @@ Estimates density and abundance from line transect survey data using forward dis
 }
 \details{
 \tabular{ll}{
-Package: \tab hsltm\cr
+Package: \tab hmltm\cr
 Type: \tab Package\cr
 Version: \tab 1.0\cr
 Date: \tab 2013-05-05\cr
 License: \tab GNU General Public License Version 2 or later\cr
 }
-Package \code{hsltm} (for "Hidden State Line Transect Model") estimates density and abundance from single-platform line transect surveys on which animals are not continuously available for detection. Unlike conventional line transect methods, hsltm methods do not assume that all animals, or even all available animals, on the transect line are detected. They assume only that all available animals at radial distance zero are detected.\cr
+Package \code{hmltm} (for "Hidden Markov Line Transect Model") estimates density and abundance from single-platform line transect surveys on which animals are not continuously available for detection. Unlike conventional line transect methods, hmltm methods do not assume that all animals, or even all available animals, on the transect line are detected. They assume only that all available animals at radial distance zero are detected.\cr
 
-In addition to the perpendicular distances to all detections required by conventional line transect methods, hsltm methods require (1) forward distances to detections and (2) estimates of the parameters of Markov models (MMs), hidden Markov models (HMMs) or Markov modulated Poisson process models (MMPPs - not yet implemented) describing animal availability patterns. More than one set of availability model paramters can be specified, in which case the estimator treats the availability model parameters as random effects.
+In addition to the perpendicular distances to all detections required by conventional line transect methods, hmltm methods require (1) forward distances to detections and (2) estimates of the parameters of Markov models (MMs), hidden Markov models (HMMs) or Markov modulated Poisson process models (MMPPs - not yet implemented) describing animal availability patterns. More than one set of availability model paramters can be specified, in which case the estimator treats the availability model parameters as random effects.
 }
 \author{
 David Borchers and Chris Jefferson
@@ -40,7 +40,7 @@ Langrock, R., Borchers, D.L. and Skaug, H. Markov-modulated nonhomogeneous Poiss
 Some packages for fitting HMMs to availability data: \code{\link{HiddenMarkov}},  \code{msm}
 }
 \examples{
-library(hsltm)
+library(hmltm)
 
 # get data and availability model parameters
 data(aerial.survey) # get bowhead aerial survey line transect data
