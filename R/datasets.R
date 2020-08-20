@@ -45,7 +45,6 @@ NULL
 #'    \item{\code{x}:}{ perpendicular distances to detections (NA if no detection).}
 #'    \item{\code{y}:}{ perpendicular distances to detections (NA if no detection).}
 #'    \item{\code{size}:}{ size of each detected group (NA if no detection).}
-#'    \item{\code{bf}:}{ Beaufort sea state at the time of each detection (NA if no detection).}
 #'    \item{\code{ht}:}{ Observation platform height in m (NA if no detection).}
 #'    \item{\code{object}:}{ unique identifier for each detection (a numeric vector; NA if no detection).}
 #'  }
