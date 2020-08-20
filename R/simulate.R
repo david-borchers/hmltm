@@ -32,51 +32,51 @@ cdfy.u=function(y,x,hfun,b,pm,Pi,delta,ymax,dy,theta.f,theta.b,u)
 }
 
 
-#' @title Tabulate point and interval estimates.
-#'
-#' @description
-#' Combines point estimates from \code{est.hmltm} and bootstrap estimates from \code{bs.hmltm} 
-#' to produce a table ready for insertion into a paper. Does not include any strata with no
-#' detections.
-#' 
-#' @param est output from \code{est.hmltm}.
-#' @param bs output  from \code{bootsum} using the same model that created \code{est}.
-#' 
-estable=function(est,bs){
-  est=est$point$ests
-  nonzeros=which(est$n>0)
-  if(!keepzeros) est=est[nonzeros,]
-  # replace stratum.Area with p
-  trow=length(est[,1])
-  Nc=est$Ngroups[trow]*sum(est$covered.area[-trow])/sum(est$stratum.Area[-trow])
-  p=est$n/(est$covered.area*est$Dgroups)
-  p[trow]=est$n[trow]/Nc
-  nL=signif(est$n/est$L,3)
-  cv.nL=round(100*bs$cv[,"n/L"],1)
-  cv.p=round(100*bs$cv[,"p"],1)
-  cv.Ngrp=round(100*bs$cv[,"Ngroups"],1)
-  cv.E.s=round(100*bs$cv[,"mean.size"],1)
-  cv.N=round(100*bs$cv[,"N"],1)
-  lcl.nL=bs$lower[,"n/L"]
-  lcl.p=bs$lower[,"p"]
-  lcl.Ngrp=bs$lower[,"Ngroups"]
-  lcl.E.s=bs$lower[,"mean.size"]
-  lcl.N=bs$lower[,"N"]
-  ucl.nL=bs$upper[,"n/L"]
-  ucl.p=bs$upper[,"p"]
-  ucl.Ngrp=bs$upper[,"Ngroups"]
-  ucl.E.s=bs$upper[,"mean.size"]
-  ucl.N=bs$upper[,"N"]
-  ci.N=paste("(",round(lcl.N),"; ",round(ucl.N),")",sep="")
-  ci.E.s=paste("(",signif(lcl.E.s,3),"; ",signif(ucl.E.s,3),")",sep="")
-  ci.Ngrp=paste("(",round(lcl.Ngrp),"; ",round(ucl.Ngrp),")",sep="")
-  out=data.frame(Strat=est$stratum,A=round(est$stratum.Area),n=est$n,L=round(est$L,1),
-                 a=round(est$covered.area,1),nL=signif(nL,3),cv.nl=cv.nL,p=signif(p,3),cv.p=cv.p,
-                 Ngrp=round(est$Ngroups),cv.Ngrp=cv.Ngrp,ci.Ngrp=ci.Ngrp,
-                 E.s=signif(est$mean.size,3),cv.E.s=cv.E.s,ci.E.s=ci.E.s,
-                 N=round(est$N),cv.N=cv.N,ci.N=ci.N)
-  return(out)
-}
+##' @title Tabulate point and interval estimates.
+##'
+##' @description
+##' Combines point estimates from \code{est.hmltm} and bootstrap estimates from \code{bs.hmltm} 
+##' to produce a table ready for insertion into a paper. Does not include any strata with no
+##' detections.
+##' 
+##' @param est output from \code{est.hmltm}.
+##' @param bs output  from \code{bootsum} using the same model that created \code{est}.
+##' 
+# estable=function(est,bs,keepzeros=TRUE){
+#   est=est$point$ests
+#   nonzeros=which(est$n>0)
+#   if(!keepzeros) est=est[nonzeros,]
+#   # replace stratum.Area with p
+#   trow=length(est[,1])
+#   Nc=est$Ngroups[trow]*sum(est$covered.area[-trow])/sum(est$stratum.Area[-trow])
+#   p=est$n/(est$covered.area*est$Dgroups)
+#   p[trow]=est$n[trow]/Nc
+#   nL=signif(est$n/est$L,3)
+#   cv.nL=round(100*bs$cv[,"n/L"],1)
+#   cv.p=round(100*bs$cv[,"p"],1)
+#   cv.Ngrp=round(100*bs$cv[,"Ngroups"],1)
+#   cv.E.s=round(100*bs$cv[,"mean.size"],1)
+#   cv.N=round(100*bs$cv[,"N"],1)
+#   lcl.nL=bs$lower[,"n/L"]
+#   lcl.p=bs$lower[,"p"]
+#   lcl.Ngrp=bs$lower[,"Ngroups"]
+#   lcl.E.s=bs$lower[,"mean.size"]
+#   lcl.N=bs$lower[,"N"]
+#   ucl.nL=bs$upper[,"n/L"]
+#   ucl.p=bs$upper[,"p"]
+#   ucl.Ngrp=bs$upper[,"Ngroups"]
+#   ucl.E.s=bs$upper[,"mean.size"]
+#   ucl.N=bs$upper[,"N"]
+#   ci.N=paste("(",round(lcl.N),"; ",round(ucl.N),")",sep="")
+#   ci.E.s=paste("(",signif(lcl.E.s,3),"; ",signif(ucl.E.s,3),")",sep="")
+#   ci.Ngrp=paste("(",round(lcl.Ngrp),"; ",round(ucl.Ngrp),")",sep="")
+#   out=data.frame(Strat=est$stratum,A=round(est$stratum.Area),n=est$n,L=round(est$L,1),
+#                  a=round(est$covered.area,1),nL=signif(nL,3),cv.nl=cv.nL,p=signif(p,3),cv.p=cv.p,
+#                  Ngrp=round(est$Ngroups),cv.Ngrp=cv.Ngrp,ci.Ngrp=ci.Ngrp,
+#                  E.s=signif(est$mean.size,3),cv.E.s=cv.E.s,ci.E.s=ci.E.s,
+#                  N=round(est$N),cv.N=cv.N,ci.N=ci.N)
+#   return(out)
+# }
 
 
 

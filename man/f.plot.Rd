@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotting.R
 \name{f.plot}
 \alias{f.plot}
-\title{detection function plotting.}
+\title{Detection hazard plotting.}
 \usage{
 f.plot(
   hmltm,
@@ -74,7 +74,17 @@ ymax already in \code{hmltm}).}
 \item{values}{If TRUE, returns hazard function values on nx by ny grid.}
 
 \item{...}{other arguments to \code{\link{image}}, \code{\link{contour}} or \code{\link{persp}}.}
+
+\item{hfun}{detection hazard function name}
+
+\item{pars}{detection hazard function parameter vector}
+
+\item{dat}{data frame.}
+
+\item{models}{model list, as for \code{\link{est.hmltm}} for example.}
 }
 \description{
+Plots detection hazard contours.
+
 Plots the detection function (1- the survivor function) of a fitted model in two dimensions.
 }

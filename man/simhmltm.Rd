@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulate.R
 \name{simhmltm}
 \alias{simhmltm}
-\title{Simulate line transect survey data using availability HMM.}
+\title{Tabulate point and interval estimates.}
 \usage{
 simhmltm(nw, hfun, pars, hmm.pars, survey.pars, print.progress = TRUE)
 }
@@ -18,12 +18,20 @@ simhmltm(nw, hfun, pars, hmm.pars, survey.pars, print.progress = TRUE)
 \item{survey.pars}{survey parameters, as for \code{\link{est.hmltm}}.}
 
 \item{print.progress}{if TRUE prints progress through simulations.}
+
+\item{est}{output from \code{est.hmltm}.}
+
+\item{bs}{output  from \code{bootsum} using the same model that created \code{est}.}
 }
 \value{
 Data frame with two elements: \code{$x} and \code{$y}, being perpendicular and forward distances
 of detected animals, respectively.
 }
 \description{
+Combines point estimates from \code{est.hmltm} and bootstrap estimates from \code{bs.hmltm} 
+to produce a table ready for insertion into a paper. Does not include any strata with no
+detections.
+
 Simulates line transect survey data in which animal availability is simulated by generating
 time series of availability data from the hidden Markov model(s) with parameters specified in
 argument \code{hmm.pars}. Currently only for models with no covariates.
