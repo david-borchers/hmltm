@@ -1,62 +1,62 @@
 #                        ------------------------
 #----------------------- Start Plotting functions --------------------------------------
 
-#' @title Detection hazard plotting.
-#'
-#' @description
-#'  Plots detection hazard contours.
-#'  
-#' @param hfun detection hazard function name
-#' @param pars detection hazard function parameter vector
-#' @param dat data frame.
-#' @param models model list, as for \code{\link{est.hmltm}} for example.
-#' @param xrange range of x-axis.
-#' @param yrange range of y-axis.
-#' @param nx number of points on x-axis at which to evaluate detection hazard function.
-#' @param ny number of points on y-axis at which to evaluate detection hazard function.
-#' @param type "contour", "persp", "image" or "both" (for image and contour).
-#' @param nlevels number of contour levels.
-#' @param add if TRUE adds to existing plot, else creates new plot.
-#' @param col colour of plot.
-#' @param logscale If TRUE, plots hazard values on log scale.
-#' @param xlab x label.
-#' @param ylab y label.
-#' @param theta argument for \code{\link{image}}.
-#' @param phi argument for \code{\link{image}}.
-#' @param ... other arguments to image, contour or persp.
-h.plot=function(hfun,pars,dat=NULL, models=NULL, xrange=c(0,50),yrange=xrange,nx=50,ny=nx,
-                type="contour",nlevels=20,add=FALSE,col="black",logscale=FALSE,
-                xlab="Perpendicular distance",ylab="Forward distance",theta=90,phi=35,...)
-{
-  if(type!="persp" & type!="both" & type!="contour" & type!="image") stop("Agrument `type' must be `persp', `contour', `image'or `both' (for contour on image).")
-  b=tfm(pars,hfun)
-  nb=length(b)
-  n=dim(dat)[1]
-  if(n>1) {
-    warning("Only allowed to plot at one level of dat. Only using first row of dat")
-    dat=dat[1,]
-    n=1
-  }
-  h=match.fun(hfun)
-  if(!is.null(dat)) {
-    covb=make.covb(b,hfun,models,dat)
-    nb=length(covb)/n
-  }
-  else covb=b
-  x=seq(xrange[1],xrange[2],length=nx)
-  y=seq(yrange[1],yrange[2],length=ny)
-  for(i in 1:n){
-    start=(i-1)*nb+1
-    bi=covb[start:(start+nb-1)]
-    h.xy=outer(x,y,FUN=hfun,b=bi)
-    if(logscale) h.xy=log(h.xy)
-    if(i>1) add=TRUE
-    if(type=="image" | type=="both") image(x,y,h.xy,add=add,xlab=xlab,ylab=ylab)
-    if(type=="both") add=TRUE
-    if(type=="contour" | type=="both") contour(x,y,h.xy,add=add,nlevels=nlevels,xlab=xlab,ylab=ylab,col=col)
-    if(type=="persp") persp(x,y,h.xy,theta=theta,phi=phi,xlab=xlab,ylab=ylab,zlab="Detection hazard")
-  }
-}
+##' @title Detection hazard plotting.
+##'
+##' @description
+##'  Plots detection hazard contours.
+##'  
+##' @param hfun detection hazard function name
+##' @param pars detection hazard function parameter vector
+##' @param dat data frame.
+##' @param models model list, as for \code{\link{est.hmltm}} for example.
+##' @param xrange range of x-axis.
+##' @param yrange range of y-axis.
+##' @param nx number of points on x-axis at which to evaluate detection hazard function.
+##' @param ny number of points on y-axis at which to evaluate detection hazard function.
+##' @param type "contour", "persp", "image" or "both" (for image and contour).
+##' @param nlevels number of contour levels.
+##' @param add if TRUE adds to existing plot, else creates new plot.
+##' @param col colour of plot.
+##' @param logscale If TRUE, plots hazard values on log scale.
+##' @param xlab x label.
+##' @param ylab y label.
+##' @param theta argument for \code{\link{image}}.
+##' @param phi argument for \code{\link{image}}.
+##' @param ... other arguments to image, contour or persp.
+# h.plot=function(hfun,pars,dat=NULL, models=NULL, xrange=c(0,50),yrange=xrange,nx=50,ny=nx,
+#                 type="contour",nlevels=20,add=FALSE,col="black",logscale=FALSE,
+#                 xlab="Perpendicular distance",ylab="Forward distance",theta=90,phi=35,...)
+# {
+#   if(type!="persp" & type!="both" & type!="contour" & type!="image") stop("Agrument `type' must be `persp', `contour', `image'or `both' (for contour on image).")
+#   b=tfm(pars,hfun)
+#   nb=length(b)
+#   n=dim(dat)[1]
+#   if(n>1) {
+#     warning("Only allowed to plot at one level of dat. Only using first row of dat")
+#     dat=dat[1,]
+#     n=1
+#   }
+#   h=match.fun(hfun)
+#   if(!is.null(dat)) {
+#     covb=make.covb(b,hfun,models,dat)
+#     nb=length(covb)/n
+#   }
+#   else covb=b
+#   x=seq(xrange[1],xrange[2],length=nx)
+#   y=seq(yrange[1],yrange[2],length=ny)
+#   for(i in 1:n){
+#     start=(i-1)*nb+1
+#     bi=covb[start:(start+nb-1)]
+#     h.xy=outer(x,y,FUN=hfun,b=bi)
+#     if(logscale) h.xy=log(h.xy)
+#     if(i>1) add=TRUE
+#     if(type=="image" | type=="both") image(x,y,h.xy,add=add,xlab=xlab,ylab=ylab)
+#     if(type=="both") add=TRUE
+#     if(type=="contour" | type=="both") contour(x,y,h.xy,add=add,nlevels=nlevels,xlab=xlab,ylab=ylab,col=col)
+#     if(type=="persp") persp(x,y,h.xy,theta=theta,phi=phi,xlab=xlab,ylab=ylab,zlab="Detection hazard")
+#   }
+# }
 
 #' @title detection function plotting.
 #'
