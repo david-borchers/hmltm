@@ -70,12 +70,12 @@ hmltm.px=function(x,pars,hfun,models=list(y=NULL,x=NULL),cov=NULL,survey.pars,hm
 #' \item{p:}{estimated mean probability of detection.}
 #' \item{invp:}{estimated inverse mean probability of detection.}
 #' }
-calc.derived=function(stat,hmmlt,obs=1:dim(hmmlt$xy)[1]){
-  if(stat=="esw") {return(fitted.esw(hmmlt,obs))}
-  else if(stat=="invesw") {return(fitted.invesw(hmmlt,obs))}
-  else if(stat=="p0") {return(fitted.px(hmmlt,obs,at.x=0))}
-  else if(stat=="p") {return(fitted.p(hmmlt,obs))}
-  else if(stat=="invp") {return(fitted.invp(hmmlt,obs))}
+calc.derived=function(stat,hmmlt,obs=1:dim(hmmlt$hmltm.fit$xy)[1]){
+  if(stat=="esw") {return(fitted.esw(hmmlt$hmltm.fit,obs))}
+  else if(stat=="invesw") {return(fitted.invesw(hmmlt$hmltm.fit,obs))}
+  else if(stat=="p0") {return(fitted.px(hmmlt$hmltm.fit,obs,at.x=0))}
+  else if(stat=="p") {return(fitted.p(hmmlt$hmltm.fit,obs))}
+  else if(stat=="invp") {return(fitted.invp(hmmlt$hmltm.fit,obs))}
   else stop(paste(stat," is an invalid stat type"))
 }
 
