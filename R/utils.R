@@ -180,7 +180,8 @@ truncdat=function(dat,minval=0,maxval=NULL,twosit=FALSE,colnames=c("stratum","ar
     if(is.null(keepcols[i])) stop("No column in dat called ",colnames[i])
   }
   NAs=dat[1,,drop=FALSE]
-  NAs[,-keepcols]=NA
+#  NAs[,-keepcols]=NA
+  NAs[,c("object","x","y")]=NA
   xcol=which(names(dat)==colnames[5])
   if(is.null(xcol)) stop("No column in dat called ",colnames[5])
   if(is.null(maxval)) maxval=max(na.omit(dat[,xcol]))
