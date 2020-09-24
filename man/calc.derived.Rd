@@ -4,7 +4,7 @@
 \alias{calc.derived}
 \title{Calculates a bunch of derived statistics from model.}
 \usage{
-calc.derived(stat, hmmlt, obs = 1:dim(hmmlt$xy)[1])
+calc.derived(stat, hmmlt, obs = 1:dim(hmmlt$hmltm.fit$xy)[1])
 }
 \arguments{
 \item{stat}{the statistic name (character variable).}
