@@ -31,7 +31,7 @@ data frame of the sort passed to \code{\link{est.hmltm}}.}
 \item{survey.pars}{survey parameters, as for \code{\link{est.hmltm}}.}
 
 \item{hmm.pars.bs}{multiple sets of availability hmm parameters, as output by 
-\code{\link{hmmpars.boot}}.}
+\code{\link{hmmpars.boot}}, OR a single set of hmm parameters in appropriate format}
 
 \item{control.fit}{list controlling fit, as for \code{\link{est.hmltm}}.}
 
