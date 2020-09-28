@@ -94,7 +94,7 @@ hmmlt.gof.y=function(hmltm,ks.plot=TRUE,seplots=FALSE,smult=5,ymax=hmmlt$fitpars
 chisq.gof.y = function(fit,breaks,nys=250) {
   fplot = fyfit.plot(fit,breaks=breaks,allx=FALSE,nys=nys,doplot=FALSE)
   model.df = length(fit$hmltm.fit$fit$par)
-  n = sum(fplot$xy$seen)
+  n = length(!is.na(fplot$xy$object))
   xcol = which(names(fplot)=="x")
   ycol = which(names(fplot)=="y")
   if(length(xcol)==0 & length(ycol)==0) stop("Must have column named x or named y")
