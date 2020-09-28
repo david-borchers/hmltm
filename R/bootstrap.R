@@ -973,7 +973,7 @@ bootstrap.p.with.Et <- function(dat,pars,hfun,models,survey.pars,hmm.pars,
 #' @param models detection hazard covariate models, as for \code{\link{est.hmltm}}.
 #' @param survey.pars survey parameters, as for \code{\link{est.hmltm}}.
 #' @param hmm.pars.bs multiple sets of availability hmm parameters, as output by 
-#' \code{\link{hmmpars.boot}}. 
+#' \code{\link{hmmpars.boot}}, OR a single set of hmm parameters in appropriate format
 #' @param control.fit list controlling fit, as for \code{\link{est.hmltm}}.
 #' @param control.opt list controlling function \code{\link{optim}}, as for \code{\link{est.hmltm}}.
 #' @param fixed.avail if TRUE, hmm.pars is treated as fixed, else element \code{$Et} is parametrically 
@@ -1019,8 +1019,10 @@ bootstrap.p.with.hmm <- function(dat,pars,hfun,models,survey.pars,hmm.pars.bs,
   for(nb in 1:B) {
     if(!fixed.avail)
       b.hmm.pars <- unvectorize.hmmpars(hmm.pars.bs[reps[nb],])
-    else
-      b.hmm.pars <- hmm.pars.bs
+    else {
+      if(is.list(hmm.pars.bs)) b.hmm.pars <- hmm.pars.bs # here if not bootstrapped but just one set of pars
+      else b.hmm.pars <- unvectorize.hmmpars(hmm.pars.bs[1,]) # here if bootstrapped sets of pars
+    }
     
     # to fix naming cock-up when creating hmmpars.bs
     if(is.element("pm",names(b.hmm.pars))) 
