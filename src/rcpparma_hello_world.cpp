@@ -71,10 +71,10 @@ int calls = 0;
 ////////////////////////////////
 
 inline double deg2rad(double theta)
-{ return theta*PI/180; }
+{ return theta*M_PI/180; }
 
 inline double rad2deg(double theta)
-{ return theta*180/PI; }
+{ return theta*180/M_PI; }
 
 inline double tan_deg2rad(double x)
 { return tan(deg2rad(x)); }

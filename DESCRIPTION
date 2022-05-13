@@ -9,5 +9,5 @@ Description: Density and abundance estimation with line transects and hidden Mar
 License: GPL (>= 2)
 Depends: Rcpp (>= 0.10.3), RcppArmadillo (>= 0.3.810.0), HiddenMarkov (>= 1.7-0), MASS (>= 7.3-23), goftest (>= 1.0-2)
 LinkingTo: Rcpp, RcppArmadillo, HiddenMarkov, MASS, goftest
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0
 Encoding: UTF-8
